@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:receita/components/meal_item.dart';
+
+import 'package:receita/models/meal.dart';
 
 class FavoriteScreen extends StatelessWidget {
-  const FavoriteScreen({Key key}) : super(key: key);
+  final List<Meal> favoriteMeal;
+  const FavoriteScreen(this.favoriteMeal);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Favoritas'),
+      child: favoriteMeal.isEmpty
+          ? Center(
+              child: Text('Sem Favorito'),
+            )
+          : ListView.builder(
+              itemCount: favoriteMeal.length,
+              itemBuilder: (_, index) {
+                return MealItem(favoriteMeal[index]);
+              }),
     );
   }
 }

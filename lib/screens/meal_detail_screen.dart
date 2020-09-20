@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:receita/models/meal.dart';
 
 class MealDetailScreen extends StatelessWidget {
+  final Function(Meal) addFavorite;
+  final bool Function(Meal) isFavorite;
+
+  const MealDetailScreen(this.addFavorite, this.isFavorite);
+
   Widget _createSectionTitle(BuildContext context, String title) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -30,6 +36,7 @@ class MealDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final meal = ModalRoute.of(context).settings.arguments as Meal;
+
     return Container(
       child: Scaffold(
         appBar: AppBar(
@@ -88,9 +95,9 @@ class MealDetailScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pop(meal.title);
+            addFavorite(meal);
           },
-          child: Icon(Icons.star),
+          child: Icon(isFavorite(meal) ? Icons.star : Icons.star_border),
         ),
       ),
     );
